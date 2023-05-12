@@ -1,0 +1,117 @@
+@startuml LandingScreenVM
+
+!define POSITIVERESPONSE 90EE90
+!define NEGATIVEERESPONSE EFBBBB
+!define NUETRALRESPONSE F2DC79
+skinparam sequence{
+    ParticipantBackgroundColor #A7BEAE
+    LifeLineBackgroundColor #E7E8D1
+    LifeLineBorderColor #2C5F2D
+    ActorBackgroundColor #FC766AFF
+    ActorBorderColor #FC766AFF
+    ArrowColor #B85042
+    ArrowFontColor #234E70
+}
+
+title LandingScreenVM - fetchAllPosts()
+autonumber 1
+hide footbox
+Caller -> LandingScreenVM: Invoke **fetchAllPosts()**
+activate Caller
+alt #POSITIVERESPONSE (TRY)
+activate LandingScreenVM
+LandingScreenVM -> LandingScreenVM: set **@isLoading** to true
+LandingScreenVM -> PostService: Invoke **getAllPosts()**
+activate PostService
+PostService --> LandingScreenVM: Return **ServiceResult<List<PostBO>>**
+deactivate PostService
+LandingScreenVM -> LandingScreenVM: Set **@isLoading** to false
+LandingScreenVM --> Caller: Return
+else #efbbbb (CATCH)
+    LandingScreenVM -> LandingScreenVM: Write exception logs
+    LandingScreenVM --> Caller : Return
+    deactivate Caller
+deactivate LandingScreenVM 
+end
+==PSEUDOCODE==
+hnote across 
+TRY
+    SET **@isLoading** to true 
+
+    INVOKE **fetchAllPosts()**
+
+    RETURN **ServiceResult<List<PostBO>>**
+
+    SET **@isLoading** to false
+
+**CATCH**
+
+    INVOKE **writeException() to the Exception object ex**
+
+endnote 
+
+newpage LandingScreenVM - onClickSortPost()
+autonumber 1
+hide footbox 
+Caller -> LandingScreenVM: Invokes **onClickSortPost()**
+activate Caller
+alt #POSITIVERESPONSE (TRY)
+activate LandingScreenVM
+LandingScreenVM -> PostBOExtension: Invokes **sortPostByDate()**
+activate PostBOExtension
+PostBOExtension --> LandingScreenVM: Set the sorted list to **@tempList**
+deactivate PostBOExtension
+LandingScreenVM --> Caller: Return
+else #efbbbb (CATCH)
+LandingScreenVM -> LandingScreenVM: Write exception logs
+LandingScreenVM --> Caller : Return
+deactivate Caller
+deactivate LandingScreenVM 
+end
+==PSEUDOCODE==
+hnote across
+**TRY**
+    INVOKE **sortPostByDate()**
+
+    SET the sorted list to **@tempPostList**
+
+**CATCH**
+
+    INVOKE **writeException() to the Exception object ex**
+
+endnote
+
+
+newpage LandingScreenVM - navigateToPostCreationScreen()
+autonumber 1
+hide footbox
+Caller -> LandingScreenVM: Invokes navigateToPostCreationScreen()
+activate Caller
+alt #POSITIVERESPONSE (TRY) 
+activate LandingScreenVM
+LandingScreenVM -> LandingScreenVM: Add the navigator push to the navigation Stream
+LandingScreenVM --> Caller: Display the PostCreation Screen
+else #efbbbb (CATCH)
+LandingScreenVM -> LandingScreenVM: Write exception logs
+LandingScreenVM --> Caller : Return
+deactivate Caller
+deactivate LandingScreenVM  
+end
+
+==PSEUDOCODE==
+hnote across
+**TRY**
+
+    ADD the **navigatorpush** to the **navigation Stream**
+
+    DISPLAY the PostCreation Screen
+
+    SET the **List<PostBO>** to **@tempPostList**
+
+**CATCH**
+
+    INVOKE **writeException() to the Exception object ex**
+
+endnote
+
+@enduml

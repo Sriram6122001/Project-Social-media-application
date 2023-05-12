@@ -1,0 +1,89 @@
+@startuml PostService-Sequence-Pseudo
+!define POSITIVERESPONSE 90EE90
+!define NEGATIVEERESPONSE EFBBBB
+!define NUETRALRESPONSE F2DC79
+
+skinparam sequence{
+    ParticipantBackgroundColor #A7BEAE
+    LifeLineBackgroundColor #E7E8D1
+    LifeLineBorderColor #2C5F2D
+    ActorBackgroundColor #FC766AFF
+    ActorBorderColor #FC766AFF
+    ArrowColor #B85042
+    ArrowFontColor #234E70
+}
+
+title 'PostService - getAllPosts()'
+autonumber 1
+hide footbox
+Caller -> PostService: Invoke **getAllPosts**
+alt #POSITIVERESPONSE (TRY)
+activate Caller
+activate PostService
+PostService -> Server: Make the http get call from the url and pass the **authkey** in header
+activate Server 
+Server --> PostService: Return **response**
+deactivate Server
+PostService -> PostService: Store the **List<PostBO>** in **response** variable.
+PostService -> PostService: Invoke **getApiServiceResult()** by using **response** and store the value in **result**
+PostService --> Caller: Return **result**
+else #NEGATIVEERESPONSE (CATCH)
+PostService -> PostService: Write exception logs
+PostService --> Caller: Return the ServiceResult with status code as ServiceException and the message with exception message.
+deactivate PostService
+deactivate Caller
+end
+
+==PSEUDOCODE==
+hnote across
+**TRY**
+
+    EXECUTE **_dio.get()** with the **url** as **"http://dummyjson.com/fetchAllPosts"** and key as **authkey** with value as **123** in header
+
+    STORE the response in the variable **response**
+
+    STORE the result of EXECUTING the method **getApiServiceResult()** by passing **result** as parameter and **type** as type of **List<UserBO>**
+
+**CATCH**
+
+    RETURN the ServiceResult with status code as *ServiceException and the message with **exception message**
+endnote
+
+newpage 'PostService - createNewPost(postBO:PostBO)'
+autonumber 1
+Hide footbox
+Caller -> PostService: Invokes **createNewPost(postBO:PostBO)**
+alt #POSITIVERESPONSE try
+activate Caller
+activate PostService
+PostService -> Server: Make the http post call from the url and pass the **authkey** in header
+activate Server 
+Server --> PostService: Returns response
+deactivate Server
+PostService -> PostService: Store the response in **response** variable.
+PostService -> PostService: invoke **getApiServiceResult()** by using **response** and store the value in **result**
+PostService --> Caller: Return **result**
+else #efbbbb Catch 
+PostService -> PostService: Write exception logs
+PostService --> Caller:  Return ServiceResult and assign the statuscode **SystemException** and message as **exception**.
+deactivate Caller
+deactivate PostService
+end
+
+==PSEUDOCODE==
+hnote across
+**TRY**
+
+    EXECUTE **_dio.post()** with the **url** as **"http://dummyjson.com/createNewPost"** and key as **authkey** with value as **123** in header
+
+    STORE the response in the variable **response**
+
+    STORE the result of EXECUTING the method **getApiServiceResult()** by passing **result** as parameter and **type** as type of **bool**
+
+**CATCH**
+
+    RETURN the ServiceResult with status code as *ServiceException and the message with **exception message**
+
+endnote
+
+@enduml

@@ -1,0 +1,96 @@
+@startuml CreationResponseScreen-Sequence-Pseudo-Diagram 
+!define POSITIVERESPONSE 90EE90
+!define NEGATIVEERESPONSE EFBBBB
+!define NUETRALRESPONSE F2DC79
+skinparam sequence{
+    ParticipantBackgroundColor #A7BEAE
+    LifeLineBackgroundColor #E7E8D1
+    LifeLineBorderColor #2C5F2D
+    ActorBackgroundColor #FC766AFF
+    ActorBorderColor #FC766AFF
+    ArrowColor #B85042
+    ArrowFontColor #234E70
+}
+title CreationResponseScreen - initState()
+autonumber 1
+hide footbox 
+actor User
+User -> CreationResponseScreen: Invoke **initState()**
+activate User
+alt (TRY)
+activate CreationResponseScreen
+CreationResponseScreen -> CreationResponseScreenVM: Invoke the **Constructor()** and pass **statusCode** as **parameter**
+activate CreationResponseScreenVM
+CreationResponseScreenVM --> CreationResponseScreen: Return 
+deactivate CreationResponseScreenVM
+CreationResponseScreen --> User: Return
+CreationResponseScreen -> CreationResponseScreen: Add a listener for **navigationStream** and listen to the **event**
+alt #POSITIVERESPONSE **(IF event is NavigatorPopAndRemoveUntil)**
+CreationResponseScreen -> CreationResponseScreen:Pop the context to the **CreationResponseScreen**
+CreationResponseScreen --> User: Return
+end 
+else #NEGATIVEERESPONSE **(CATCH)**
+CreationResponseScreen -> CreationResponseScreen: Write exception logs
+CreationResponseScreen--> User: Return
+deactivate CreationResponseScreen
+deactivate User 
+end
+
+==PSEUDOCODE - initState()==
+hnote across
+**TRY**
+
+        INVOKE the **Constructor()** and pass the **@statusCode** as **parameter**
+
+        ADD a listener for **navigationStream** and listen to the **event**
+
+        **(IF event is NavigatorPopAndRemoveUntil)**
+
+        POP the **context** to the **CreationResponseScreen**
+
+**CATCH**
+
+        INVOKE **writeException() to the Exception object ex**
+
+endnote
+
+newpage CreationResponseScreen - dispose()
+autonumber 1
+hide footbox
+User -> CreationResponseScreen: Invokes **dispose()**
+activate User
+activate CreationResponseScreen
+CreationResponseScreen -> CreationResponseScreen: Dispose the **navigationStream** using dispose()
+CreationResponseScreen --> User: Return
+deactivate User
+deactivate CreationResponseScreen
+
+==PSEUDOCODE - dispose()==
+
+hnote across 
+
+DISPOSE the **navigationStream Controller**
+
+endnote
+
+newpage CreationResponseScreen - "Back To" button.clicked
+autonumber 1
+hide footbox
+User -> CreationResponseScreen: Invokes **navigateToCreationResponseScreen()**
+activate User
+activate CreationResponseScreen
+CreationResponseScreen -> CreationResponseScreen: Returns
+CreationResponseScreen --> User: Displays **CreationResponseScreen**
+deactivate User
+deactivate CreationResponseScreen
+
+==PSEUDOCODE== 
+hnote across
+
+INVOKE **navigateToCreationResponseScreen()**
+
+DISPLAY the **CreationResponseScreen**
+
+endnote
+
+@enduml

@@ -1,0 +1,62 @@
+@startuml PostService Class Diagram
+
+Title PostService Class Diagram 
+package Services{
+    package PostService{
+        Interface IPostService{
+            + getAllPosts(): Future<ServiceResult<List<PostBO>>>
+            + createNewPost(Post:PostBO): Future<ServiceResult<bool>>
+        }
+    }
+}
+
+package Bos{
+    package PostBO{
+        class PostBO{
+        }
+        
+    }
+}
+
+IPostService --> PostBO
+
+newpage
+package pages{
+    package LandingScreen{
+        class LandingScreenVM{
+            + fetchAllPosts(): Future<void>
+        }
+    }
+}
+
+Title PostService Class Diagram 
+package Services{
+    package PostService{
+        Interface IPostService{
+            + getAllPosts(): Future<ServiceResult<List<PostBO>>>
+        }
+    }
+}
+
+
+LandingScreenVM --> IPostService
+
+newpage
+package Pages{
+    package PostCreationScreen{
+        class PostCreationScreenVM{
+            + onClickCreateNewPost(): Future<void>
+        }
+    }
+}
+
+package Services{
+    package PostService{
+        Interface IPostService{
+            + createNewPost(Post:PostBO): Future<ServiceResult<bool>>
+        }
+    }
+}
+
+PostCreationScreenVM --> IPostService
+@enduml

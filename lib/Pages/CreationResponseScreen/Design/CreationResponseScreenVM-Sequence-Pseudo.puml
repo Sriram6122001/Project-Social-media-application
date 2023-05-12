@@ -1,0 +1,44 @@
+@startuml CreationResponseScreenVM-Sequence-Pseudo-Diagram 
+
+!define POSITIVERESPONSE 90EE90
+!define NEGATIVEERESPONSE EFBBBB
+!define NUETRALRESPONSE F2DC79
+skinparam sequence{
+    ParticipantBackgroundColor #A7BEAE
+    LifeLineBackgroundColor #E7E8D1
+    LifeLineBorderColor #2C5F2D
+    ActorBackgroundColor #FC766AFF
+    ActorBorderColor #FC766AFF
+    ArrowColor #B85042
+    ArrowFontColor #234E70
+}
+title CreationResponseScreenVM - navigateToLandingScreen()
+autonumber 1
+hide footbox 
+Caller -> CreationResponseScreenVM: Invoke **navigateToLandingScreen()**
+activate Caller
+alt (TRY) 
+activate CreationResponseScreenVM
+CreationResponseScreenVM -> CreationResponseScreenVM: Add the **NavigatorPopAndRemoveUntil** to the **navigation Stream**
+CreationResponseScreenVM --> Caller: Returns
+else #NEGATIVEERESPONSE (CATCH)
+CreationResponseScreenVM -> CreationResponseScreenVM: Write exception logs
+CreationResponseScreenVM --> Caller: Returns
+deactivate CreationResponseScreenVM
+deactivate Caller
+end
+
+==PSEUDOCODE==
+hnote across 
+**TRY**
+
+    ADD the **NavigatorPopAndRemoveUntil** to the **navigationStream**
+
+    DISPLAY the **LandingScreen**
+
+**CATCH**
+
+    INVOKE **writeException() to the Exception object ex**
+
+endnote
+@enduml

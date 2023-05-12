@@ -1,0 +1,82 @@
+@startuml PostBO Class Diagram 
+title PostBO
+package BOs{
+    package PostBO{
+        class PostBO{
+            + id: int 
+            + title: String 
+            + description: String 
+            + date: Date
+        }
+        class PostBOExtension
+        {
+            + sortPostByDate(): List<PostBO>
+        }
+    }
+}
+package Pages{
+    package LandingScreen{
+        class LandingScreenVM{
+            + onClickSortPost(): void
+        }
+    }
+
+    package PostCreationScreen{
+        class PostCreationScreenVM{
+            + onClickCreateNewPost(): Future<void>
+        }
+    }
+}
+
+package Services{
+    package PostService{
+        Interface IPostService{
+            + getAllPosts(): Future<ServiceResult<List<PostBO>>>
+            + createNewPost(Post:PostBO): Future<ServiceResult<bool>>
+        }
+    }
+}
+
+PostBOExtension --> PostBO 
+PostCreationScreenVM -> PostBO
+LandingScreenVM --> PostBO
+IPostService --> PostBO
+
+newpage 
+package pages{
+    package LandingScreen{
+       class LandingScreenVM{
+            + onClickSortPost(): void
+        }
+    }
+}
+
+package BOs{
+    package PostBO{
+        class PostBOExtension{
+            + sortPostByDate(): List<UserBO>
+        }
+    }
+}
+LandingScreenVM --> PostBOExtension
+
+
+newpage 
+package Helpers{
+    package Utilities{
+        class Utilities{
+           + showCurrentDate: Date
+        }
+    }
+}
+
+package BOs{
+    package PostBO{
+        class PostBOExtension{
+            + sortPostByDate(): List<UserBO>
+        }
+    }
+}
+
+PostBOExtension --> Utilities
+@enduml

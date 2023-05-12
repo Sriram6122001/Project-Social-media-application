@@ -1,0 +1,21 @@
+@startuml Utilities Class Diagram 
+
+
+package Pages{
+    package LandingScreen
+    {
+        class LandingScreenVM{
+            + fetchAllPosts(): Future<void>
+        }
+    }
+}
+package Helpers{
+    package Utilities{
+        class Utilities{
+            + showCurrentDate(): void
+        }
+    }
+}
+
+LandingScreenVM --> Utilities
+@enduml 

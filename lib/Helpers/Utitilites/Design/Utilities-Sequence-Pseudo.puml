@@ -1,0 +1,44 @@
+@startuml Utilities-Sequence-Pseudo
+!define POSITIVERESPONSE 90EE90
+!define NEGATIVEERESPONSE EFBBBB
+!define NUETRALRESPONSE F2DC79
+skinparam sequence{
+    ParticipantBackgroundColor #A7BEAE
+    LifeLineBackgroundColor #E7E8D1
+    LifeLineBorderColor #2C5F2D
+    ActorBackgroundColor #FC766AFF
+    ActorBorderColor #FC766AFF
+    ArrowColor #B85042
+    ArrowFontColor #234E70
+}
+
+title   **Utilities - showCurrentDate()**
+autonumber 1
+hide footbox
+Caller->showCurrentDate: Invoke **showCurrentDate()** 
+activate Caller
+activate showCurrentDate
+showCurrentDate->showCurrentDate: Get the Date using **Date.now** and store it in a variable
+showCurrentDate->showCurrentDate: Intialize the format type using **DateFormat** and store it in a variable
+showCurrentDate->showCurrentDate: Format the Date variable using format() 
+showCurrentDate-->Caller: Returns the **Current Date** 
+deactivate Caller
+deactivate showCurrentDate
+
+
+
+==PSEUDOCODE - showCurrentDate()==
+
+hnote across
+
+    GET the **Current date** and store it to a variable.
+
+    INITALIZE **formatter** to **format** the **date** as **dd-MM-yyyy**
+
+    FORMAT the Date variable named now using format()
+
+    RETURN the **Current Date**
+
+end note
+
+@enduml

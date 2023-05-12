@@ -1,0 +1,50 @@
+@startuml LandingScreen Class Diagram 
+
+title LandingScreen
+package Pages{
+    package LandingScreen{
+        Class LandingScreen{
+            - _landingScreenVM: LandingScreenVM
+            + initState(): void 
+            + dispose(): void        
+        }
+        class LandingScreenVM{
+            + fetchAllPosts(): Future<void>
+            + onClickSortPost(): void 
+            + navigateToPostCreationScreen: void
+        }
+        class LandingScreenModel{
+            + PostService: IPostService
+            + @originalPostList: List<PostBO>
+            + @tempPostList: List<PostBO>
+            + @isLoading: bool
+        }
+    }
+}
+
+package BOs{
+    package PostBO{
+        Class PostBO{
+        }
+        Class PostBOExtension{
+            + sortPostByDate(): List<PostBO>
+        }
+    }
+}
+
+package Services{
+    package PostService{
+        Interface IPostService{
+            + getAllPost(): Future<ServiceResult<<List<PostBO>>>
+        }
+    }
+}
+
+LandingScreen --> LandingScreenVM: uses
+LandingScreenVM --> LandingScreenModel: extends
+LandingScreenVM -> PostBO
+LandingScreenVM --> PostBOExtension
+LandingScreenVM --> IPostService
+PostBOExtension -> PostBO
+
+@enduml

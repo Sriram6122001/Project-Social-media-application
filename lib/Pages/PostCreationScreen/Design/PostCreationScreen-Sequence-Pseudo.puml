@@ -1,0 +1,193 @@
+@startuml PostCreationScreen-Sequence-Pseudo
+!define POSITIVERESPONSE 90EE90
+!define NEGATIVEERESPONSE EFBBBB
+!define NUETRALRESPONSE F2DC79
+
+skinparam sequence{
+    ParticipantBackgroundColor #A7BEAE
+    LifeLineBackgroundColor #E7E8D1
+    LifeLineBorderColor #2C5F2D
+    ActorBackgroundColor #FC766AFF
+    ActorBorderColor #FC766AFF
+    ArrowColor #B85042
+    ArrowFontColor #234E70
+}
+
+title PostCreationScreen - initState()
+autonumber 1
+hide footbox
+actor User
+User -> PostCreationScreen: Invoke initState()
+activate User 
+alt (TRY)
+activate PostCreationScreen
+PostCreationScreen -> PostCreationScreen: Add a listener for **navigationStream**
+alt #POSITIVERESPONSE (IF event is NavigatorPush)
+PostCreationScreen -> PostCreationScreen:Push the context to the **CreationResponseScreen**
+PostCreationScreen --> User: Return
+else #POSITIVERESPONSE (IF event is navigatorPop)
+PostCreationScreen -> PostCreationScreen:Pop the context to the **PostCreationScreen**
+PostCreationScreen --> User: Return
+end 
+PostCreationScreen -> PostCreationScreen: Add a listener for **textControllerStream**
+alt #POSITIVERESPONSE (IF event is addText)
+PostCreationScreen -> PostCreationScreen:Add the content to the **textfield** for **title**
+PostCreationScreen --> User: Return
+end 
+PostCreationScreen -> PostCreationScreen: Add a listener for **textControllerStream**
+alt #POSITIVERESPONSE (IF event is addText)
+PostCreationScreen -> PostCreationScreen:Add the content to the **textfield** for **description**
+PostCreationScreen --> User: Return
+end 
+else #NEGATIVEERESPONSE (CATCH)
+PostCreationScreen -> PostCreationScreen: Write exception logs
+PostCreationScreen --> User: Return
+deactivate PostCreationScreen
+deactivate User 
+end
+
+==PSEUDOCODE - initState()==
+
+hnote across
+
+**TRY**
+
+        ADD a listener to the **navigationStream**
+
+        **IF event is NavigatorPush**
+
+            PUSH the context to the **Response Screen** with data as **status code**
+
+        **IF event is NavigatorPop**
+
+            POP the context to the **PostCreationScreen**
+
+        ADD a listener to the **textcontrollerStream** for title
+
+        **IF event is addText**
+
+            ASSIGN the **event** to the controller
+
+        ADD a listener to the **textcontrollerStream** for description 
+
+        **IF event is addText**
+
+            ASSIGN the **event** to the controller
+
+**CATCH**
+
+        INVOKE **writeException() to the Exception object ex**
+
+end note
+
+newpage PostCreationScreen - dispose()
+autonumber 1
+hide footbox
+User -> PostCreationScreen: Invokes dispose()
+activate User
+activate PostCreationScreen
+PostCreationScreen -> PostCreationScreen: Dispose the **navigation Stream**
+PostCreationScreen --> User: Return
+PostCreationScreen -> PostCreationScreen: Dispose the **TextStream of Title**
+PostCreationScreen --> User: Return
+PostCreationScreen -> PostCreationScreen: Dispose the **TextStream of Description**
+PostCreationScreen --> User: Return
+deactivate User
+deactivate PostCreationScreen
+
+==PSEUDOCODE - dispose()==
+hnote across 
+
+    DISPOSE the **navigationStream** using **dispose()**
+
+    DISPOSE the **TextStream of Title** using **dispose()**
+
+    DISPOSE the **TextStream of Description** using **dispose()**
+
+endnote
+
+newpage PostCreationScreen - "Create" button.clicked
+autonumber 1
+hide footbox
+User -> PostCreationScreen: **"Create"** button.clicked
+activate User
+activate PostCreationScreen
+PostCreationScreen -> PostCreationScreenVM: Invoke **onClickCreateNewPost()**
+PostCreationScreenVM --> PostCreationScreen: Return
+PostCreationScreen --> User: Display **Post Created**
+deactivate User
+deactivate PostCreationScreen
+
+==PSEUDOCODE - "Create" button.clicked== 
+hnote across
+
+INVOKE **onClickCreateNewPost()**
+
+DISPLAY the **PostCreationScreen**
+
+endnote
+
+newpage PostCreationScreen - "GO Back" button.clicked
+autonumber 1
+hide footbox
+User -> PostCreationScreen: **"GO Back"** button.clicked
+activate User
+activate PostCreationScreen
+PostCreationScreen -> PostCreationScreenVM: Invoke **navigateToPostCreationScreen()**
+PostCreationScreenVM --> PostCreationScreen: Return
+PostCreationScreen --> User: Display **PostCreationScreen**
+deactivate User
+deactivate PostCreationScreen
+
+==PSEUDOCODE - "GO Back" button.clicked== 
+hnote across
+
+INVOKE **navigateToPostCreationScreen()**
+
+DISPLAY the **PostCreationScreen**
+
+endnote
+
+newpage PostCreationScreen - textformfield for title.clicked
+autonumber 1
+hide footbox
+User -> PostCreationScreen: User enters text in the textField
+activate User
+activate PostCreationScreen
+PostCreationScreen -> PostCreationScreenVM: Invoke **onTitleChange()**
+PostCreationScreenVM --> PostCreationScreen: Return
+PostCreationScreen --> User: Display **Text**
+deactivate User
+deactivate PostCreationScreen
+
+==PSEUDOCODE - textformfield for title.clicked== 
+hnote across
+
+INVOKE **onTitleChange()**
+
+DISPLAY the **Text**
+
+endnote
+
+newpage PostCreationScreen - textformfield for description.clicked
+autonumber 1
+hide footbox
+User -> PostCreationScreen: User enters text in the textField
+activate User
+activate PostCreationScreen
+PostCreationScreen -> PostCreationScreenVM: Invoke **onDescriptionChange()**
+PostCreationScreenVM --> PostCreationScreen: Return
+PostCreationScreen --> User: Display **Text**
+deactivate User
+deactivate PostCreationScreen
+
+==PSEUDOCODE - textformfield for description.clicked== 
+hnote across
+
+INVOKE **onDescriptionChange()**
+
+DISPLAY the **Text**
+
+endnote
+
+@enduml

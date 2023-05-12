@@ -1,0 +1,124 @@
+@startuml LandingScreen-Sequence-Pseudo-Diagram 
+
+!define POSITIVERESPONSE 90EE90
+!define NEGATIVEERESPONSE EFBBBB
+!define NUETRALRESPONSE F2DC79
+skinparam sequence{
+    ParticipantBackgroundColor #A7BEAE
+    LifeLineBackgroundColor #E7E8D1
+    LifeLineBorderColor #2C5F2D
+    ActorBackgroundColor #FC766AFF
+    ActorBorderColor #FC766AFF
+    ArrowColor #B85042
+    ArrowFontColor #234E70
+}
+
+title LandingScreen - initState()
+actor User
+autonumber 1
+hide footbox
+User -> LandingScreen: Invoke initState()
+activate User 
+alt #POSITIVERESPONSE (TRY)
+activate LandingScreen
+LandingScreen -> LandingScreenVM: Invoke fetchAllPosts()                                                                                                                                  
+activate LandingScreenVM
+LandingScreenVM --> LandingScreen: Return
+deactivate LandingScreenVM 
+LandingScreen --> User: Display **list of posts**
+LandingScreen -> LandingScreen: Add a listener for **navigationStream** 
+alt #POSITIVERESPONSE (IF event is NavigatorPush)
+LandingScreen -> LandingScreen:Push the context to the **PostCreationScreen**
+LandingScreen --> User: Return
+end 
+else #NEGATIVEERESPONSE (CATCH)
+LandingScreen -> LandingScreen: write Exception logs
+LandingScreen --> User: Return
+deactivate LandingScreen
+deactivate User 
+end
+
+==PSEUDOCODE - initState()==
+hnote across 
+**TRY**
+
+    INVOKE **fetchAllPosts()**
+
+    DISPLAY **List of posts**
+
+    ADD a listener for navigationStream 
+
+    **(IF event is NavigatorPush)**
+
+        PUSH the context to the **PostCreationScreen**
+
+**CATCH**
+
+    INVOKE **writeException() to the Exception object ex**
+
+endnote
+
+newpage LandingScreen - dispose()
+autonumber 1
+hide footbox
+User -> LandingScreen: Invoke **dispose()**
+activate User
+activate LandingScreen
+LandingScreen -> LandingScreen: Dispose the **navigationStream**
+LandingScreen --> User: Return
+deactivate User
+deactivate LandingScreen
+
+==PSEUDOCODE - dispose()== 
+hnote across
+DISPOSE the **navigationStream Controller**
+endnote
+
+newpage LandingScreen - "Post" button.clicked
+autonumber 1
+hide footbox
+User -> LandingScreen: **"Post"** button.clicked
+activate User
+activate LandingScreen
+LandingScreen -> LandingScreenVM: Invoke **navigateToPostCreationScreen**
+activate LandingScreenVM
+LandingScreenVM --> LandingScreen: Return
+deactivate LandingScreenVM
+LandingScreen --> User: Displays **PostCreationScreen**
+deactivate User
+deactivate LandingScreen
+
+==PSEUDOCODE - "Post" button.clicked== 
+hnote across
+
+INVOKE **onClickCreatePost**
+
+INVOKE **navigateToPostCreationScreen**
+
+DISPLAY the **PostCreationPage**
+
+endnote
+
+newpage LandingScreen - "Sort" button.clicked
+autonumber 1
+hide footbox
+User -> LandingScreen:**"Sort"** button.clicked
+activate User
+activate LandingScreen
+LandingScreen -> LandingScreenVM: Invoke **onClickSortPost**
+activate LandingScreenVM
+LandingScreenVM --> LandingScreen: Return
+deactivate LandingScreenVM
+LandingScreen --> User: Displays **Sorted List**
+deactivate User
+deactivate LandingScreen
+
+==PSEUDOCODE - "Sort" button.clicked== 
+hnote across
+
+INVOKE **onClickSortPost**
+
+DISPLAY the **Sorted List**
+
+endnote
+@enduml

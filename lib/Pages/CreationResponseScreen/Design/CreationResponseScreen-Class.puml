@@ -1,0 +1,28 @@
+@startuml CreationResponseScreen Class Diagram 
+
+title CreationResponseScreen
+package Pages{
+    package CreationResponseScreen{
+        Class CreationResponseScreen{
+            - _creationResponseScreenVM: CreationResponseScreenVM
+            + initState(): void 
+            + dispose(): void
+          
+        }
+        class CreationResponseVM{ 
+            + constructor(): void
+            + navigateToLandingScreen(): void 
+        }
+
+        class CreationResponseModel{
+            + @statusCode: int
+            + @isVisible: bool 
+        }
+    }
+}
+
+
+CreationResponseScreen --> CreationResponseVM: uses
+CreationResponseVM --> CreationResponseModel: extends
+
+@enduml

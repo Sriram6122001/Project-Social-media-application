@@ -1,0 +1,48 @@
+@startuml PostCreationScreen Class Diagram 
+
+package Pages{
+    package PostCreationScreen{
+        Class PostCreationScreen{
+            - _postCreationScreenVM: PostCreationScreenVM
+            + initState(): void 
+            + dispose(): void
+          
+        }
+        class PostCreationScreenVM{
+            + onClickCreateNewPost(): Future<void>
+            + onTitleChange(title:String): void 
+            + onDescriptionChange(description: String): void 
+            + navigateToLandingScreen(): void 
+            + navigateToCreationResponseScreen(): void
+        }
+
+        class PostCreationScreenModel{
+            + PostService: IPostService
+            + @title: String
+            + @description: String
+            + @dataToBeSent: int
+        }
+    }
+}
+
+package Bos{
+    package PostBO{
+        Class PostBO{
+        }
+    }
+}
+
+package Services{
+    package PostService{
+        Interface IPostService{
+            + createNewPost(Post:PostBO): Future<ServiceResult<bool>>
+        }
+    }
+}
+
+PostCreationScreen --> PostCreationScreenVM: uses
+PostCreationScreenVM --> PostCreationScreenModel: extends
+PostCreationScreenVM --> PostBO
+PostCreationScreenVM --> IPostService
+
+@enduml

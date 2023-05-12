@@ -1,0 +1,185 @@
+@startuml PostCreationScreenVM-Sequence-Pseudo-Diagram 
+
+!define POSITIVERESPONSE 90EE90
+!define NEGATIVEERESPONSE EFBBBB
+!define NUETRALRESPONSE F2DC79
+skinparam sequence{
+    ParticipantBackgroundColor #A7BEAE
+    LifeLineBackgroundColor #E7E8D1
+    LifeLineBorderColor #2C5F2D
+    ActorBackgroundColor #FC766AFF
+    ActorBorderColor #FC766AFF
+    ArrowColor #B85042
+    ArrowFontColor #234E70
+}
+
+title PostCreationScreenVM-**onClickCreatePost()**
+autonumber 1
+hide footbox 
+activate Caller 
+Caller -> PostCreationScreenVM: Invoke **onClickCreatePost()**
+activate PostCreationScreenVM
+alt #POSITIVERESPONSE TRY
+PostCreationScreenVM -> PostCreationScreenVM: Create a instance newpost for the createNewPost(PostBO: PostBO) and assign it to a variable
+PostCreationScreenVM -> PostCreationScreenVM: Set the **@isLoading** As true
+PostCreationScreenVM -> PostService: Invokes **createNewPost(postBO:PostBO)**
+activate PostService
+PostService --> PostCreationScreenVM: Return **ServiceResult<bool>**
+deactivate PostService
+alt #POSITIVERESPONSE (If Status of the ServiceResult is OK)
+PostCreationScreenVM -> PostCreationScreenVM: Set the **statuscode** as the **data** of the **navigationStream**
+PostCreationScreenVM --> Caller: Returns 
+else #NEGATIVEERESPONSE (If Status of the ServiceResult is BadRequest)
+PostCreationScreenVM -> PostCreationScreenVM: Set serviceResult message in **@errorMessage**
+end 
+PostCreationScreenVM -> PostCreationScreenVM: Set the **@isLoading** as false
+else #NEGATIVEERESPONSE (CATCH)
+PostCreationScreenVM -> PostCreationScreenVM: Write exception logs
+PostCreationScreenVM --> Caller: Returns
+deactivate PostCreationScreenVM
+deactivate Caller
+end
+
+==PSEUDOCODE==
+hnote across
+
+**TRY**
+
+    CREATE a instance newpost for the createNewPost(PostBO: PostBO) and assign it to a variable
+
+    SET the **@isLoading** to true
+
+    INVOKE **createNewPost(postBO:PostBO)**
+
+    RETURN **ServiceResult<bool>**
+
+    **(If Status of the ServiceResult is OK)**
+
+        SET **@isError** as false 
+
+        ASSIGN the **List<PostBO>** to the **@originalList** and **@tempList**
+
+    **(If Status of the ServiceResult is BadRequest)**
+
+        SET serviceResult message in **@errorMessage**
+        
+**CATCH**
+
+        INVOKE **writeException() to the Exception object ex**
+
+endnote
+
+
+newpage PostCreationScreen-onTitleChange(title:String)
+autonumber 1
+Hide footbox 
+Caller -> PostCreationScreenVM: Invoke **onTitleChange(description)**
+alt TRY
+activate Caller
+activate PostCreationScreenVM
+PostCreationScreenVM -> PostCreationScreenVM: Add the **textField** data to the **textFieldStream**
+PostCreationScreenVM --> Caller: Returns
+else #NEGATIVEERESPONSE (CATCH)
+PostCreationScreenVM -> PostCreationScreenVM: Write exception logs
+PostCreationScreenVM --> Caller: Returns
+deactivate PostCreationScreenVM
+deactivate Caller
+end
+
+==PSEUDOCODE==
+hnote across 
+**TRY**
+
+        ADD the **textField** data to the **textFieldStream**
+
+**CATCH**
+
+    INVOKE **writeException() to the Exception object ex**
+
+endnote
+
+newpage PostCreationScreen-onDescriptionChange(description:String)
+autonumber 
+Hide footbox 
+Caller -> PostCreationScreenVM: Invoke **onDescriptionChange(description)**
+alt TRY
+activate Caller
+activate PostCreationScreenVM
+PostCreationScreenVM -> PostCreationScreenVM: Add the **textField** data to the **textFieldStream**
+PostCreationScreenVM --> Caller: Returns
+else #NEGATIVEERESPONSE (CATCH)
+PostCreationScreenVM -> PostCreationScreenVM: Write exception logs
+PostCreationScreenVM --> Caller: Returns
+deactivate PostCreationScreenVM
+deactivate Caller
+end
+==PSEUDOCODE==
+hnote across 
+**TRY**
+
+        ADD the **textField** data to the **textFieldStream**
+
+**CATCH**
+
+    INVOKE **writeException() to the Exception object ex**
+
+endnote
+
+newpage PostCreationScreenVM - navigateToLandingScreen()
+autonumber 1
+hide footbox 
+Caller -> PostCreationScreenVM: Invoke **navigateToLandingScreen()**
+activate Caller
+alt TRY 
+activate PostCreationScreenVM
+PostCreationScreenVM -> PostCreationScreenVM: Add the navigator pop to the **navigationStream**
+PostCreationScreenVM --> Caller: Display the **LandingScreen**
+else #NEGATIVEERESPONSE (CATCH)
+PostCreationScreenVM -> PostCreationScreenVM: Write exception logs
+PostCreationScreenVM --> Caller: Returns
+deactivate PostCreationScreenVM
+deactivate Caller
+end
+==PSEUDOCODE==
+hnote across 
+**TRY**
+          
+    ADD the **navigationpush** to the navigator Stream
+
+    DISPLAY the CreationResponseScreen
+
+**CATCH**
+
+    INVOKE **writeException() to the Exception object ex**
+
+endnote
+
+newpage PostCreationScreenVM - navigateToCreationResponseScreen()
+autonumber 1
+hide footbox 
+Caller -> PostCreationScreenVM: Invoke **navigateToCreationResponseScreen()**
+activate Caller
+alt TRY 
+activate PostCreationScreenVM
+PostCreationScreenVM -> PostCreationScreenVM: Add the navigator push to the **navigationStream**
+PostCreationScreenVM --> Caller: Display the **CreationResponseScreen**
+else #NEGATIVEERESPONSE (CATCH)
+PostCreationScreenVM -> PostCreationScreenVM: Write exception logs
+PostCreationScreenVM --> Caller: Returns
+deactivate PostCreationScreenVM
+deactivate Caller
+end
+==PSEUDOCODE==
+hnote across 
+**TRY**
+          
+    ADD the **navigationpush** to the navigator Stream
+
+    DISPLAY the CreationResponseScreen
+
+**CATCH**
+
+    INVOKE **writeException() to the Exception object ex**
+
+endnote
+@enduml
