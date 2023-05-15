@@ -21,17 +21,17 @@ alt (TRY)
 activate CreationResponseScreen
 CreationResponseScreen -> CreationResponseScreenVM: Invoke the **Constructor()** and pass **statusCode** as **parameter**
 activate CreationResponseScreenVM
-CreationResponseScreenVM --> CreationResponseScreen: Return 
+CreationResponseScreenVM --> CreationResponseScreen: Returns
 deactivate CreationResponseScreenVM
-CreationResponseScreen --> User: Return
+CreationResponseScreen --> User: Returns
 CreationResponseScreen -> CreationResponseScreen: Add a listener for **navigationStream** and listen to the **event**
 alt #POSITIVERESPONSE **(IF event is NavigatorPopAndRemoveUntil)**
 CreationResponseScreen -> CreationResponseScreen:Pop the context to the **CreationResponseScreen**
-CreationResponseScreen --> User: Return
+CreationResponseScreen --> User: Returns
 end 
 else #NEGATIVEERESPONSE **(CATCH)**
-CreationResponseScreen -> CreationResponseScreen: Write exception logs
-CreationResponseScreen--> User: Return
+CreationResponseScreen -> CreationResponseScreen: Write log exceptions
+CreationResponseScreen--> User: Returns
 deactivate CreationResponseScreen
 deactivate User 
 end
@@ -61,7 +61,7 @@ User -> CreationResponseScreen: Invokes **dispose()**
 activate User
 activate CreationResponseScreen
 CreationResponseScreen -> CreationResponseScreen: Dispose the **navigationStream** using dispose()
-CreationResponseScreen --> User: Return
+CreationResponseScreen --> User: Returns
 deactivate User
 deactivate CreationResponseScreen
 
@@ -76,15 +76,16 @@ endnote
 newpage CreationResponseScreen - "Back To" button.clicked
 autonumber 1
 hide footbox
-User -> CreationResponseScreen: Invokes **navigateToCreationResponseScreen()**
+User -> CreationResponseScreen: Invokes **"Back To" button.clicked**
 activate User
 activate CreationResponseScreen
-CreationResponseScreen -> CreationResponseScreen: Returns
+CreationResponseScreen -> CreationResponseScreenVM: Invokes **navigateToCreationResponseScreen()**
+CreationResponseScreenVM -> CreationResponseScreen: Returns
 CreationResponseScreen --> User: Displays **CreationResponseScreen**
 deactivate User
 deactivate CreationResponseScreen
 
-==PSEUDOCODE== 
+==PSEUDOCODE - "Back To" button.clicked== 
 hnote across
 
 INVOKE **navigateToCreationResponseScreen()**

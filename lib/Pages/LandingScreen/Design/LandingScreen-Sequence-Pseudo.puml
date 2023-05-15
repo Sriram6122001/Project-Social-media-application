@@ -25,14 +25,14 @@ LandingScreen -> LandingScreenVM: Invoke fetchAllPosts()
 activate LandingScreenVM
 LandingScreenVM --> LandingScreen: Return
 deactivate LandingScreenVM 
-LandingScreen --> User: Display **list of posts**
+LandingScreen --> User: Display **@tempList**
 LandingScreen -> LandingScreen: Add a listener for **navigationStream** 
 alt #POSITIVERESPONSE (IF event is NavigatorPush)
 LandingScreen -> LandingScreen:Push the context to the **PostCreationScreen**
 LandingScreen --> User: Return
 end 
 else #NEGATIVEERESPONSE (CATCH)
-LandingScreen -> LandingScreen: write Exception logs
+LandingScreen -> LandingScreen: Write log exceptions
 LandingScreen --> User: Return
 deactivate LandingScreen
 deactivate User 
@@ -44,7 +44,7 @@ hnote across
 
     INVOKE **fetchAllPosts()**
 
-    DISPLAY **List of posts**
+    DISPLAY **@tempList**
 
     ADD a listener for navigationStream 
 
@@ -82,7 +82,7 @@ activate User
 activate LandingScreen
 LandingScreen -> LandingScreenVM: Invoke **navigateToPostCreationScreen**
 activate LandingScreenVM
-LandingScreenVM --> LandingScreen: Return
+LandingScreenVM --> LandingScreen: Returns
 deactivate LandingScreenVM
 LandingScreen --> User: Displays **PostCreationScreen**
 deactivate User

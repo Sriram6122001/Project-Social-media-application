@@ -34,13 +34,13 @@ PostCreationScreenVM -> PostCreationScreenVM: Set serviceResult message in **@er
 end 
 PostCreationScreenVM -> PostCreationScreenVM: Set the **@isLoading** as false
 else #NEGATIVEERESPONSE (CATCH)
-PostCreationScreenVM -> PostCreationScreenVM: Write exception logs
+PostCreationScreenVM -> PostCreationScreenVM: Write log exceptions
 PostCreationScreenVM --> Caller: Returns
 deactivate PostCreationScreenVM
 deactivate Caller
 end
 
-==PSEUDOCODE==
+==PSEUDOCODE - **onClickCreatePost()**==
 hnote across
 
 **TRY**
@@ -77,20 +77,20 @@ Caller -> PostCreationScreenVM: Invoke **onTitleChange(description)**
 alt TRY
 activate Caller
 activate PostCreationScreenVM
-PostCreationScreenVM -> PostCreationScreenVM: Add the **textField** data to the **textFieldStream**
+PostCreationScreenVM -> PostCreationScreenVM: Add the **textField** data for title to the **textFieldStream**
 PostCreationScreenVM --> Caller: Returns
 else #NEGATIVEERESPONSE (CATCH)
-PostCreationScreenVM -> PostCreationScreenVM: Write exception logs
+PostCreationScreenVM -> PostCreationScreenVM: Write log exceptions
 PostCreationScreenVM --> Caller: Returns
 deactivate PostCreationScreenVM
 deactivate Caller
 end
 
-==PSEUDOCODE==
+==PSEUDOCODE - onTitleChange(title:String)==
 hnote across 
 **TRY**
 
-        ADD the **textField** data to the **textFieldStream**
+        ADD the **textField** data for title to the **textFieldStream**
 
 **CATCH**
 
@@ -105,19 +105,19 @@ Caller -> PostCreationScreenVM: Invoke **onDescriptionChange(description)**
 alt TRY
 activate Caller
 activate PostCreationScreenVM
-PostCreationScreenVM -> PostCreationScreenVM: Add the **textField** data to the **textFieldStream**
+PostCreationScreenVM -> PostCreationScreenVM: Add the **textField** data for decription to the **textFieldStream**
 PostCreationScreenVM --> Caller: Returns
 else #NEGATIVEERESPONSE (CATCH)
-PostCreationScreenVM -> PostCreationScreenVM: Write exception logs
+PostCreationScreenVM -> PostCreationScreenVM: Write log exceptions
 PostCreationScreenVM --> Caller: Returns
 deactivate PostCreationScreenVM
 deactivate Caller
 end
-==PSEUDOCODE==
+==PSEUDOCODE - onDescriptionChange(description:String)==
 hnote across 
 **TRY**
 
-        ADD the **textField** data to the **textFieldStream**
+        ADD the **textField** data for description to the **textFieldStream**
 
 **CATCH**
 
@@ -132,21 +132,19 @@ Caller -> PostCreationScreenVM: Invoke **navigateToLandingScreen()**
 activate Caller
 alt TRY 
 activate PostCreationScreenVM
-PostCreationScreenVM -> PostCreationScreenVM: Add the navigator pop to the **navigationStream**
-PostCreationScreenVM --> Caller: Display the **LandingScreen**
+PostCreationScreenVM -> PostCreationScreenVM: Pop to the **LandingScreen**
+PostCreationScreenVM --> Caller: Returns
 else #NEGATIVEERESPONSE (CATCH)
-PostCreationScreenVM -> PostCreationScreenVM: Write exception logs
+PostCreationScreenVM -> PostCreationScreenVM: Write log exceptions
 PostCreationScreenVM --> Caller: Returns
 deactivate PostCreationScreenVM
 deactivate Caller
 end
-==PSEUDOCODE==
+==PSEUDOCODE - navigateToLandingScreen()==
 hnote across 
 **TRY**
           
-    ADD the **navigationpush** to the navigator Stream
-
-    DISPLAY the CreationResponseScreen
+    POP to the **LandingScreen**
 
 **CATCH**
 
@@ -161,21 +159,19 @@ Caller -> PostCreationScreenVM: Invoke **navigateToCreationResponseScreen()**
 activate Caller
 alt TRY 
 activate PostCreationScreenVM
-PostCreationScreenVM -> PostCreationScreenVM: Add the navigator push to the **navigationStream**
-PostCreationScreenVM --> Caller: Display the **CreationResponseScreen**
+PostCreationScreenVM -> PostCreationScreenVM: Push to the **CreationResponseScreen**
+PostCreationScreenVM --> Caller: Returns
 else #NEGATIVEERESPONSE (CATCH)
-PostCreationScreenVM -> PostCreationScreenVM: Write exception logs
+PostCreationScreenVM -> PostCreationScreenVM: Write log exceptions
 PostCreationScreenVM --> Caller: Returns
 deactivate PostCreationScreenVM
 deactivate Caller
 end
-==PSEUDOCODE==
+==PSEUDOCODE - navigateToCreationResponseScreen()==
 hnote across 
 **TRY**
           
-    ADD the **navigationpush** to the navigator Stream
-
-    DISPLAY the CreationResponseScreen
+    PUSH to the **CreationResponseScreen**
 
 **CATCH**
 

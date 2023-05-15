@@ -26,6 +26,6 @@ deactivate Caller
 
 ==PSEUDOCODE - sortPostByDate()==
 hnote across 
-SORT the **@tempList** using **sort()** and use **compareTo()** to compare using **Date**.
+SORT the **@tempPostList** using **sort()** and use **compareTo()** to compare using **Date**.
 endnote
 @enduml

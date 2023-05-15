@@ -26,10 +26,10 @@ activate PostService
 PostService --> LandingScreenVM: Return **ServiceResult<List<PostBO>>**
 deactivate PostService
 LandingScreenVM -> LandingScreenVM: Set **@isLoading** to false
-LandingScreenVM --> Caller: Return
+LandingScreenVM --> Caller: Returns
 else #efbbbb (CATCH)
-    LandingScreenVM -> LandingScreenVM: Write exception logs
-    LandingScreenVM --> Caller : Return
+    LandingScreenVM -> LandingScreenVM: Write log exceptions
+    LandingScreenVM --> Caller : Returns
     deactivate Caller
 deactivate LandingScreenVM 
 end
@@ -61,10 +61,10 @@ LandingScreenVM -> PostBOExtension: Invokes **sortPostByDate()**
 activate PostBOExtension
 PostBOExtension --> LandingScreenVM: Set the sorted list to **@tempList**
 deactivate PostBOExtension
-LandingScreenVM --> Caller: Return
+LandingScreenVM --> Caller: Returns
 else #efbbbb (CATCH)
-LandingScreenVM -> LandingScreenVM: Write exception logs
-LandingScreenVM --> Caller : Return
+LandingScreenVM -> LandingScreenVM: Write log exceptions
+LandingScreenVM --> Caller : Returns
 deactivate Caller
 deactivate LandingScreenVM 
 end
@@ -89,11 +89,11 @@ Caller -> LandingScreenVM: Invokes navigateToPostCreationScreen()
 activate Caller
 alt #POSITIVERESPONSE (TRY) 
 activate LandingScreenVM
-LandingScreenVM -> LandingScreenVM: Add the navigator push to the navigation Stream
-LandingScreenVM --> Caller: Display the PostCreation Screen
+LandingScreenVM -> LandingScreenVM: Push to the **postCreationScreen**
+LandingScreenVM --> Caller: Returns
 else #efbbbb (CATCH)
-LandingScreenVM -> LandingScreenVM: Write exception logs
-LandingScreenVM --> Caller : Return
+LandingScreenVM -> LandingScreenVM: Write log exceptions
+LandingScreenVM --> Caller : Returns
 deactivate Caller
 deactivate LandingScreenVM  
 end
@@ -102,7 +102,7 @@ end
 hnote across
 **TRY**
 
-    ADD the **navigatorpush** to the **navigation Stream**
+    Push to the **postCreationScreen**
 
     DISPLAY the PostCreation Screen
 

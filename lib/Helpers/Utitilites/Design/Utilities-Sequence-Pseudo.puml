@@ -18,8 +18,8 @@ hide footbox
 Caller->showCurrentDate: Invoke **showCurrentDate()** 
 activate Caller
 activate showCurrentDate
-showCurrentDate->showCurrentDate: Get the Date using **Date.now** and store it in a variable
-showCurrentDate->showCurrentDate: Intialize the format type using **DateFormat** and store it in a variable
+showCurrentDate->showCurrentDate: Get the Date using **Date.now** and store it in a variable named "date"
+showCurrentDate->showCurrentDate: Intialize the format type using **DateFormat** and store it in a variable named "formatter"
 showCurrentDate->showCurrentDate: Format the Date variable using format() 
 showCurrentDate-->Caller: Returns the **Current Date** 
 deactivate Caller
@@ -31,9 +31,9 @@ deactivate showCurrentDate
 
 hnote across
 
-    GET the **Current date** and store it to a variable.
+    GET the **Current date** and store it to a variable named "date".
 
-    INITALIZE **formatter** to **format** the **date** as **dd-MM-yyyy**
+    INITALIZE a variable named **formatter** to **format** the **date** as **dd-MM-yyyy**
 
     FORMAT the Date variable named now using format()
 

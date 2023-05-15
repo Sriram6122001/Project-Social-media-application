@@ -22,13 +22,13 @@ activate CreationResponseScreenVM
 CreationResponseScreenVM -> CreationResponseScreenVM: Add the **NavigatorPopAndRemoveUntil** to the **navigation Stream**
 CreationResponseScreenVM --> Caller: Returns
 else #NEGATIVEERESPONSE (CATCH)
-CreationResponseScreenVM -> CreationResponseScreenVM: Write exception logs
+CreationResponseScreenVM -> CreationResponseScreenVM: Write log exceptions
 CreationResponseScreenVM --> Caller: Returns
 deactivate CreationResponseScreenVM
 deactivate Caller
 end
 
-==PSEUDOCODE==
+==PSEUDOCODE - navigateToLandingScreen()==
 hnote across 
 **TRY**
 

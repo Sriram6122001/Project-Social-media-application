@@ -24,11 +24,11 @@ PostService -> Server: Make the http get call from the url and pass the **authke
 activate Server 
 Server --> PostService: Return **response**
 deactivate Server
-PostService -> PostService: Store the **List<PostBO>** in **response** variable.
-PostService -> PostService: Invoke **getApiServiceResult()** by using **response** and store the value in **result**
-PostService --> Caller: Return **result**
+PostService -> PostService: Store the response in **response** variable.
+PostService -> PostService: Invoke **getApiServiceResult()** by using **response**
+PostService --> Caller: Return ServiceResult and assign the statuscode **OK** and message as **Success** and content as **response**
 else #NEGATIVEERESPONSE (CATCH)
-PostService -> PostService: Write exception logs
+PostService -> PostService: Write log exceptions
 PostService --> Caller: Return the ServiceResult with status code as ServiceException and the message with exception message.
 deactivate PostService
 deactivate Caller
@@ -42,7 +42,7 @@ hnote across
 
     STORE the response in the variable **response**
 
-    STORE the result of EXECUTING the method **getApiServiceResult()** by passing **result** as parameter and **type** as type of **List<UserBO>**
+    STORE the result of the method **getApiServiceResult()** by passing **result** as parameter and **type** as type of **List<UserBO>**
 
 **CATCH**
 
@@ -52,19 +52,19 @@ endnote
 newpage 'PostService - createNewPost(postBO:PostBO)'
 autonumber 1
 Hide footbox
-Caller -> PostService: Invokes **createNewPost(postBO:PostBO)**
+Caller -> PostService: Invoke **createNewPost(postBO:PostBO)**
 alt #POSITIVERESPONSE try
 activate Caller
 activate PostService
-PostService -> Server: Make the http post call from the url and pass the **authkey** in header
+PostService -> Server: Make the http post call and pass PostBO from the url and pass the **authkey** in header
 activate Server 
 Server --> PostService: Returns response
 deactivate Server
 PostService -> PostService: Store the response in **response** variable.
-PostService -> PostService: invoke **getApiServiceResult()** by using **response** and store the value in **result**
-PostService --> Caller: Return **result**
+PostService -> PostService: Invoke **getApiServiceResult()** by using **response** 
+PostService --> Caller: Return ServiceResult and assign the statuscode **OK** and message as **Success** and content as **response.data**
 else #efbbbb Catch 
-PostService -> PostService: Write exception logs
+PostService -> PostService: Write log exceptions
 PostService --> Caller:  Return ServiceResult and assign the statuscode **SystemException** and message as **exception**.
 deactivate Caller
 deactivate PostService
@@ -78,7 +78,7 @@ hnote across
 
     STORE the response in the variable **response**
 
-    STORE the result of EXECUTING the method **getApiServiceResult()** by passing **result** as parameter and **type** as type of **bool**
+    STORE the result of the method **getApiServiceResult()** by passing **result** as parameter and **type** as type of **bool**
 
 **CATCH**
 

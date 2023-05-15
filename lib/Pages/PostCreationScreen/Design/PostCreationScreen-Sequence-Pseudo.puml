@@ -24,24 +24,24 @@ activate PostCreationScreen
 PostCreationScreen -> PostCreationScreen: Add a listener for **navigationStream**
 alt #POSITIVERESPONSE (IF event is NavigatorPush)
 PostCreationScreen -> PostCreationScreen:Push the context to the **CreationResponseScreen**
-PostCreationScreen --> User: Return
+PostCreationScreen --> User: Returns
 else #POSITIVERESPONSE (IF event is navigatorPop)
 PostCreationScreen -> PostCreationScreen:Pop the context to the **PostCreationScreen**
-PostCreationScreen --> User: Return
+PostCreationScreen --> User: Returns
 end 
 PostCreationScreen -> PostCreationScreen: Add a listener for **textControllerStream**
 alt #POSITIVERESPONSE (IF event is addText)
 PostCreationScreen -> PostCreationScreen:Add the content to the **textfield** for **title**
-PostCreationScreen --> User: Return
+PostCreationScreen --> User: Returns
 end 
 PostCreationScreen -> PostCreationScreen: Add a listener for **textControllerStream**
 alt #POSITIVERESPONSE (IF event is addText)
 PostCreationScreen -> PostCreationScreen:Add the content to the **textfield** for **description**
-PostCreationScreen --> User: Return
+PostCreationScreen --> User: Returns
 end 
 else #NEGATIVEERESPONSE (CATCH)
-PostCreationScreen -> PostCreationScreen: Write exception logs
-PostCreationScreen --> User: Return
+PostCreationScreen -> PostCreationScreen: Write log exceptions
+PostCreationScreen --> User: Returns
 deactivate PostCreationScreen
 deactivate User 
 end
@@ -87,11 +87,9 @@ User -> PostCreationScreen: Invokes dispose()
 activate User
 activate PostCreationScreen
 PostCreationScreen -> PostCreationScreen: Dispose the **navigation Stream**
-PostCreationScreen --> User: Return
 PostCreationScreen -> PostCreationScreen: Dispose the **TextStream of Title**
-PostCreationScreen --> User: Return
 PostCreationScreen -> PostCreationScreen: Dispose the **TextStream of Description**
-PostCreationScreen --> User: Return
+PostCreationScreen --> User: Returns
 deactivate User
 deactivate PostCreationScreen
 
@@ -113,7 +111,9 @@ User -> PostCreationScreen: **"Create"** button.clicked
 activate User
 activate PostCreationScreen
 PostCreationScreen -> PostCreationScreenVM: Invoke **onClickCreateNewPost()**
-PostCreationScreenVM --> PostCreationScreen: Return
+activate PostCreationScreenVM
+PostCreationScreenVM --> PostCreationScreen: Returns
+deactivate PostCreationScreenVM
 PostCreationScreen --> User: Display **Post Created**
 deactivate User
 deactivate PostCreationScreen
@@ -134,7 +134,9 @@ User -> PostCreationScreen: **"GO Back"** button.clicked
 activate User
 activate PostCreationScreen
 PostCreationScreen -> PostCreationScreenVM: Invoke **navigateToPostCreationScreen()**
-PostCreationScreenVM --> PostCreationScreen: Return
+activate PostCreationScreenVM
+PostCreationScreenVM --> PostCreationScreen: Returns
+deactivate PostCreationScreenVM
 PostCreationScreen --> User: Display **PostCreationScreen**
 deactivate User
 deactivate PostCreationScreen
@@ -154,8 +156,10 @@ hide footbox
 User -> PostCreationScreen: User enters text in the textField
 activate User
 activate PostCreationScreen
-PostCreationScreen -> PostCreationScreenVM: Invoke **onTitleChange()**
-PostCreationScreenVM --> PostCreationScreen: Return
+PostCreationScreen -> PostCreationScreenVM: Invoke **onTitleChange(title:String)**
+activate PostCreationScreenVM
+PostCreationScreenVM --> PostCreationScreen: Returns
+deactivate PostCreationScreenVM
 PostCreationScreen --> User: Display **Text**
 deactivate User
 deactivate PostCreationScreen
@@ -163,7 +167,7 @@ deactivate PostCreationScreen
 ==PSEUDOCODE - textformfield for title.clicked== 
 hnote across
 
-INVOKE **onTitleChange()**
+INVOKE **onTitleChange(title:String)**
 
 DISPLAY the **Text**
 
@@ -174,9 +178,10 @@ autonumber 1
 hide footbox
 User -> PostCreationScreen: User enters text in the textField
 activate User
-activate PostCreationScreen
-PostCreationScreen -> PostCreationScreenVM: Invoke **onDescriptionChange()**
-PostCreationScreenVM --> PostCreationScreen: Return
+PostCreationScreen -> PostCreationScreenVM: Invoke **onDescriptionChange(description:String)**
+activate PostCreationScreenVM
+PostCreationScreenVM --> PostCreationScreen: Returns
+deactivate PostCreationScreenVM
 PostCreationScreen --> User: Display **Text**
 deactivate User
 deactivate PostCreationScreen
@@ -184,7 +189,7 @@ deactivate PostCreationScreen
 ==PSEUDOCODE - textformfield for description.clicked== 
 hnote across
 
-INVOKE **onDescriptionChange()**
+INVOKE **onDescriptionChange(description:String)**
 
 DISPLAY the **Text**
 
