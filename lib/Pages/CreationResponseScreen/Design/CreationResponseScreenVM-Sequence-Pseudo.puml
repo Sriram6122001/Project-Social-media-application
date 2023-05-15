@@ -34,8 +34,6 @@ hnote across
 
     ADD the **NavigatorPopAndRemoveUntil** to the **navigationStream**
 
-    DISPLAY the **LandingScreen**
-
 **CATCH**
 
     INVOKE **writeException() to the Exception object ex**
@@ -45,12 +43,28 @@ endnote
 newpage CreationResponseScreenVM - CreationResponseScreenVM(statusCode: int)
 autonumber 1 
 hide footbox
-Caller -> CreationResponseScreenVM: Invokes CreationResponseScreenVM(statusCode:int)
+Caller -> CreationResponseScreenVM: Invokes **CreationResponseScreenVM(statusCode:int)**
 Activate Caller
 Activate CreationResponseScreenVM 
+alt (TRY)
 CreationResponseScreenVM -> CreationResponseScreenVM: Set the parameter **"StatusCode"** to the variable **"statusCode"**
 CreationResponseScreenVM --> Caller: Returns 
+else #NEGATIVEERESPONSE (CATCH)
+CreationResponseScreenVM -> CreationResponseScreenVM: Write log exceptions
+CreationResponseScreenVM --> Caller: Returns
 deactivate Caller 
 deactivate CreationResponseScreenVM
+end 
 
+==PSEUDOCODE - CreationResponseScreenVM(statusCode:int)==
+
+hnote across 
+**TRY**
+
+    SET the parameter **"StatusCode"** to the variable **"statusCode"**
+
+**CATCH**
+
+    INVOKE **writeException() to the Exception object ex**
+endnote
 @enduml
