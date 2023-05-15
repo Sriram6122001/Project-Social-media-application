@@ -41,4 +41,16 @@ hnote across
     INVOKE **writeException() to the Exception object ex**
 
 endnote
+
+newpage CreationResponseScreenVM - CreationResponseScreenVM(statusCode: int)
+autonumber 1 
+hide footbox
+Caller -> CreationResponseScreenVM: Invokes CreationResponseScreenVM(statusCode:int)
+Activate Caller
+Activate CreationResponseScreenVM 
+CreationResponseScreenVM -> CreationResponseScreenVM: Set the parameter **"StatusCode"** to the variable **"statusCode"**
+CreationResponseScreenVM --> Caller: Returns 
+deactivate Caller 
+deactivate CreationResponseScreenVM
+
 @enduml

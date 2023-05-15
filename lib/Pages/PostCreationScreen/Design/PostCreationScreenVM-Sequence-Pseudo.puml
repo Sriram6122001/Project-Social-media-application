@@ -73,7 +73,7 @@ endnote
 newpage PostCreationScreen-onTitleChange(title:String)
 autonumber 1
 Hide footbox 
-Caller -> PostCreationScreenVM: Invoke **onTitleChange(description)**
+Caller -> PostCreationScreenVM: Invoke **onTitleChange(title)**
 alt TRY
 activate Caller
 activate PostCreationScreenVM
