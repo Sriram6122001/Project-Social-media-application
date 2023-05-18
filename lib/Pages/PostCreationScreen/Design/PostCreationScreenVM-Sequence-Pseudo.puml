@@ -24,18 +24,18 @@ PostCreationScreenVM -> PostCreationScreenVM: Create a instance newpost for the 
 PostCreationScreenVM -> PostCreationScreenVM: Set the **@isLoading** As true
 PostCreationScreenVM -> PostService: Invokes **createNewPost(postBO:PostBO)**
 activate PostService
-PostService --> PostCreationScreenVM: Return **ServiceResult<bool>**
+PostService --> PostCreationScreenVM: Returns **ServiceResult<bool>**
 deactivate PostService
 alt #POSITIVERESPONSE (If Status of the ServiceResult is OK)
 PostCreationScreenVM -> PostCreationScreenVM: Set the **statuscode** as the **data** of the **navigationStream**
-PostCreationScreenVM --> Caller: Returns 
+PostCreationScreenVM --> Caller: Return
 else #NEGATIVEERESPONSE (If Status of the ServiceResult is BadRequest)
 PostCreationScreenVM -> PostCreationScreenVM: Set serviceResult message in **@errorMessage**
 end 
 PostCreationScreenVM -> PostCreationScreenVM: Set the **@isLoading** as false
 else #NEGATIVEERESPONSE (CATCH)
 PostCreationScreenVM -> PostCreationScreenVM: Write log exceptions
-PostCreationScreenVM --> Caller: Returns
+PostCreationScreenVM --> Caller: Return
 deactivate PostCreationScreenVM
 deactivate Caller
 end
@@ -51,7 +51,7 @@ hnote across
 
     INVOKE **createNewPost(postBO:PostBO)**
 
-    RETURN **ServiceResult<bool>**
+    RETURNS **ServiceResult<bool>**
 
     **(If Status of the ServiceResult is OK)**
 
@@ -78,10 +78,10 @@ alt TRY
 activate Caller
 activate PostCreationScreenVM
 PostCreationScreenVM -> PostCreationScreenVM: Add the **textField** data for title to the **textFieldStream**
-PostCreationScreenVM --> Caller: Returns
+PostCreationScreenVM --> Caller: Return
 else #NEGATIVEERESPONSE (CATCH)
 PostCreationScreenVM -> PostCreationScreenVM: Write log exceptions
-PostCreationScreenVM --> Caller: Returns
+PostCreationScreenVM --> Caller: Return
 deactivate PostCreationScreenVM
 deactivate Caller
 end
@@ -106,10 +106,10 @@ alt TRY
 activate Caller
 activate PostCreationScreenVM
 PostCreationScreenVM -> PostCreationScreenVM: Add the **textField** data for decription to the **textFieldStream**
-PostCreationScreenVM --> Caller: Returns
+PostCreationScreenVM --> Caller: Return
 else #NEGATIVEERESPONSE (CATCH)
 PostCreationScreenVM -> PostCreationScreenVM: Write log exceptions
-PostCreationScreenVM --> Caller: Returns
+PostCreationScreenVM --> Caller: Return
 deactivate PostCreationScreenVM
 deactivate Caller
 end
@@ -133,10 +133,10 @@ activate Caller
 alt TRY 
 activate PostCreationScreenVM
 PostCreationScreenVM -> PostCreationScreenVM: Pop to the **LandingScreen**
-PostCreationScreenVM --> Caller: Returns
+PostCreationScreenVM --> Caller: Return
 else #NEGATIVEERESPONSE (CATCH)
 PostCreationScreenVM -> PostCreationScreenVM: Write log exceptions
-PostCreationScreenVM --> Caller: Returns
+PostCreationScreenVM --> Caller: Return
 deactivate PostCreationScreenVM
 deactivate Caller
 end
@@ -160,10 +160,10 @@ activate Caller
 alt TRY 
 activate PostCreationScreenVM
 PostCreationScreenVM -> PostCreationScreenVM: Push to the **CreationResponseScreen**
-PostCreationScreenVM --> Caller: Returns
+PostCreationScreenVM --> Caller: Return
 else #NEGATIVEERESPONSE (CATCH)
 PostCreationScreenVM -> PostCreationScreenVM: Write log exceptions
-PostCreationScreenVM --> Caller: Returns
+PostCreationScreenVM --> Caller: Return
 deactivate PostCreationScreenVM
 deactivate Caller
 end

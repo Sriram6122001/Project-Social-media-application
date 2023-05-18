@@ -82,7 +82,7 @@ activate User
 activate LandingScreen
 LandingScreen -> LandingScreenVM: Invoke **navigateToPostCreationScreen**
 activate LandingScreenVM
-LandingScreenVM --> LandingScreen: Returns
+LandingScreenVM --> LandingScreen: Return
 deactivate LandingScreenVM
 LandingScreen --> User: Displays **PostCreationScreen**
 deactivate User

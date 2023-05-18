@@ -24,24 +24,24 @@ activate PostCreationScreen
 PostCreationScreen -> PostCreationScreen: Add a listener for **navigationStream**
 alt #POSITIVERESPONSE (IF event is NavigatorPush)
 PostCreationScreen -> PostCreationScreen:Push the context to the **CreationResponseScreen**
-PostCreationScreen --> User: Returns
+PostCreationScreen --> User: Return
 else #POSITIVERESPONSE (IF event is navigatorPop)
 PostCreationScreen -> PostCreationScreen:Pop the context to the **PostCreationScreen**
-PostCreationScreen --> User: Returns
+PostCreationScreen --> User: Return
 end 
 PostCreationScreen -> PostCreationScreen: Add a listener for **textControllerStream**
 alt #POSITIVERESPONSE (IF event is addText)
 PostCreationScreen -> PostCreationScreen:Add the content to the **textfield** for **title**
-PostCreationScreen --> User: Returns
+PostCreationScreen --> User: Return
 end 
 PostCreationScreen -> PostCreationScreen: Add a listener for **textControllerStream**
 alt #POSITIVERESPONSE (IF event is addText)
 PostCreationScreen -> PostCreationScreen:Add the content to the **textfield** for **description**
-PostCreationScreen --> User: Returns
+PostCreationScreen --> User: Return
 end 
 else #NEGATIVEERESPONSE (CATCH)
 PostCreationScreen -> PostCreationScreen: Write log exceptions
-PostCreationScreen --> User: Returns
+PostCreationScreen --> User: Return
 deactivate PostCreationScreen
 deactivate User 
 end
@@ -89,7 +89,7 @@ activate PostCreationScreen
 PostCreationScreen -> PostCreationScreen: Dispose the **navigation Stream**
 PostCreationScreen -> PostCreationScreen: Dispose the **TextStream of Title**
 PostCreationScreen -> PostCreationScreen: Dispose the **TextStream of Description**
-PostCreationScreen --> User: Returns
+PostCreationScreen --> User: Return
 deactivate User
 deactivate PostCreationScreen
 
@@ -112,7 +112,7 @@ activate User
 activate PostCreationScreen
 PostCreationScreen -> PostCreationScreenVM: Invoke **onClickCreateNewPost()**
 activate PostCreationScreenVM
-PostCreationScreenVM --> PostCreationScreen: Returns
+PostCreationScreenVM --> PostCreationScreen: Return
 deactivate PostCreationScreenVM
 PostCreationScreen --> User: Display **Post Created**
 deactivate User
@@ -135,7 +135,7 @@ activate User
 activate PostCreationScreen
 PostCreationScreen -> PostCreationScreenVM: Invoke **navigateToPostCreationScreen()**
 activate PostCreationScreenVM
-PostCreationScreenVM --> PostCreationScreen: Returns
+PostCreationScreenVM --> PostCreationScreen: Return
 deactivate PostCreationScreenVM
 PostCreationScreen --> User: Display **PostCreationScreen**
 deactivate User
@@ -158,7 +158,7 @@ activate User
 activate PostCreationScreen
 PostCreationScreen -> PostCreationScreenVM: Invoke **onTitleChange(title:String)**
 activate PostCreationScreenVM
-PostCreationScreenVM --> PostCreationScreen: Returns
+PostCreationScreenVM --> PostCreationScreen: Return
 deactivate PostCreationScreenVM
 PostCreationScreen --> User: Display **Text**
 deactivate User
@@ -181,7 +181,7 @@ activate User
 activate PostCreationScreen
 PostCreationScreen -> PostCreationScreenVM: Invoke **onDescriptionChange(description:String)**
 activate PostCreationScreenVM
-PostCreationScreenVM --> PostCreationScreen: Returns
+PostCreationScreenVM --> PostCreationScreen: Return
 deactivate PostCreationScreenVM
 PostCreationScreen --> User: Display **Text**
 deactivate PostCreationScreen

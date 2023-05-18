@@ -35,7 +35,7 @@ package Bos{
 package Services{
     package PostService{
         Interface IPostService{
-            + createNewPost(Post:PostBO): Future<ServiceResult<bool>>
+            + createNewPost<T>(Post:PostBO): Future<ServiceResult<bool>>
         }
     }
 }

@@ -22,18 +22,18 @@ activate Caller
 activate PostService
 PostService -> Server: Make the http get call from the url and pass the **authkey** in header
 activate Server 
-Server --> PostService: Return **List<PostBO>**
+Server --> PostService: Returns **List<PostBO>**
 deactivate Server
 PostService -> PostService: Store the response in **response** variable.
 PostService -> PostService: Invoke **getApiServiceResult()** by using **response** and store the value in **result**
-PostService --> Caller: Return **ServiceResult**
+PostService --> Caller: Returns **ServiceResult**
 else #NEGATIVEERESPONSE on FormatException
-PostService --> Caller: Return ServiceResult and assign the statuscode as **Forbidden** and message as **"The type of data got is incorrect!"**
+PostService --> Caller: Returns ServiceResult and assign the statuscode as **Forbidden** and message as **"The type of data got is incorrect!"**
 else #NEGATIVEERESPONSE on SocketException
-PostService --> Caller: Return ServiceResult and assign the statuscode as **NetworkFailure** and message as **"There is not internet connection!"** and content as **empty**
+PostService --> Caller: Returns ServiceResult and assign the statuscode as **NetworkFailure** and message as **"There is not internet connection!"** and content as **empty**
 else #NEGATIVEERESPONSE (CATCH)
 PostService -> PostService: Write log exceptions
-PostService --> Caller:  Return ServiceResult and assign the statuscode **SystemException** and message as **exception**.
+PostService --> Caller:  Returns ServiceResult and assign the statuscode **SystemException** and message as **exception**.
 deactivate PostService
 deactivate Caller
 end
@@ -48,19 +48,19 @@ hnote across
 
     STORE the result of EXECUTING the method **getApiServiceResult()** by passing **result** as parameter and **type** as type of **List<UserBO>**
 
-    RETURN **ServiceResult**
+    RETURNS **ServiceResult**
 
 **ON FORMATEXCEPTION**
 
-    RETURN ServiceResult and assign the **statuscode as Forbidden** and **message as "The type of data got is incorrect!"**
+    RETURNS ServiceResult and assign the **statuscode as Forbidden** and **message as "The type of data got is incorrect!"**
 
 **ON SOCKETEXCEPTION**
 
-    RETURN ServiceResult and assign the **statuscode as NetworkFailure** and **message as "There is not internet connection!"** and **content as empty**
+    RETURNS ServiceResult and assign the **statuscode as NetworkFailure** and **message as "There is not internet connection!"** and **content as empty**
     
 **CATCH**
 
-    RETURN ServiceResult and assign the statuscode **SystemException** and message as **exception**
+    RETURNS ServiceResult and assign the statuscode **SystemException** and message as **exception**
 
 endnote
 
@@ -77,14 +77,14 @@ Server --> PostService: Returns **response**
 deactivate Server
 PostService -> PostService: Store the response in **response** variable.
 PostService -> PostService: Invoke **getApiServiceResult()** by using **response** 
-PostService --> Caller: Return **ServiceResult**
+PostService --> Caller: Returns **ServiceResult**
 else #NEGATIVEERESPONSE on FormatException
-PostService --> Caller: Return ServiceResult and assign the statuscode as **Forbidden** and message as "The type of data got is incorrect!"
+PostService --> Caller: Returns ServiceResult and assign the statuscode as **Forbidden** and message as "The type of data got is incorrect!"
 else #NEGATIVEERESPONSE on SocketException
-PostService --> Caller: Return ServiceResult and assign the statuscode as **NetworkFailure** and message as "There is not internet connection!" and content as empty
+PostService --> Caller: Returns ServiceResult and assign the statuscode as **NetworkFailure** and message as "There is not internet connection!" and content as empty
 else #efbbbb Catch 
 PostService -> PostService: Write log exceptions
-PostService --> Caller:  Return ServiceResult and assign the statuscode **SystemException** and message as **exception**.
+PostService --> Caller:  Returns ServiceResult and assign the statuscode **SystemException** and message as **exception**.
 deactivate Caller
 deactivate PostService
 end
@@ -99,19 +99,19 @@ hnote across
 
     STORE the result of EXECUTING the method **getApiServiceResult()** by passing **result** as parameter and **type** as type of **bool**
 
-    RETURN **ServiceResult**
+    RETURNS **ServiceResult**
 
 **ON FORMATEXCEPTION**
 
-    RETURN ServiceResult and assign the  **statuscode as Forbidden** and **message as "The type of data got is incorrect!"**
+    RETURNS ServiceResult and assign the  **statuscode as Forbidden** and **message as "The type of data got is incorrect!"**
 
 **ON SOCKETEXCEPTION**
 
-    RETURN ServiceResult and assign the **statuscode as NetworkFailure** and **message as "There is not internet connection!"** and **content as empty**
+    RETURNS ServiceResult and assign the **statuscode as NetworkFailure** and **message as "There is not internet connection!"** and **content as empty**
     
 **CATCH**
 
-    RETURN ServiceResult and assign the statuscode **SystemException** and message as **exception**
+    RETURNS ServiceResult and assign the statuscode **SystemException** and message as **exception**
 
 endnote
 

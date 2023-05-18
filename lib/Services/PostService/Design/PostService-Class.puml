@@ -4,8 +4,8 @@ Title PostService Class Diagram
 package Services{
     package PostService{
         Interface IPostService{
-            + getAllPosts(): Future<ServiceResult<List<PostBO>>>
-            + createNewPost(Post:PostBO): Future<ServiceResult<bool>>
+            + getAllPosts<T>(): Future<ServiceResult<List<PostBO>>>
+            + createNewPost<T>(Post:PostBO): Future<ServiceResult<bool>>
         }
     }
 }
@@ -33,7 +33,7 @@ Title PostService Class Diagram
 package Services{
     package PostService{
         Interface IPostService{
-            + getAllPosts(): Future<ServiceResult<List<PostBO>>>
+            + getAllPosts<T>(): Future<ServiceResult<List<PostBO>>>
         }
     }
 }
@@ -53,7 +53,7 @@ package Pages{
 package Services{
     package PostService{
         Interface IPostService{
-            + createNewPost(Post:PostBO): Future<ServiceResult<bool>>
+            + createNewPost<T>(Post:PostBO): Future<ServiceResult<bool>>
         }
     }
 }

@@ -23,13 +23,13 @@ activate LandingScreenVM
 LandingScreenVM -> LandingScreenVM: set **@isLoading** to true
 LandingScreenVM -> PostService: Invoke **getAllPosts()**
 activate PostService
-PostService --> LandingScreenVM: Return **ServiceResult<List<PostBO>>**
+PostService --> LandingScreenVM: Returns **ServiceResult<List<PostBO>>**
 deactivate PostService
 LandingScreenVM -> LandingScreenVM: Set **@isLoading** to false
-LandingScreenVM --> Caller: Returns
+LandingScreenVM --> Caller: Return
 else #efbbbb (CATCH)
     LandingScreenVM -> LandingScreenVM: Write log exceptions
-    LandingScreenVM --> Caller : Returns
+    LandingScreenVM --> Caller : Return
     deactivate Caller
 deactivate LandingScreenVM 
 end
@@ -40,7 +40,7 @@ TRY
 
     INVOKE **fetchAllPosts()**
 
-    RETURN **ServiceResult<List<PostBO>>**
+    RETURNS **ServiceResult<List<PostBO>>**
 
     SET **@isLoading** to false
 
@@ -61,10 +61,10 @@ LandingScreenVM -> PostBOExtension: Invokes **sortPostByDate()**
 activate PostBOExtension
 PostBOExtension --> LandingScreenVM: Set the sorted list to **@tempList**
 deactivate PostBOExtension
-LandingScreenVM --> Caller: Returns
+LandingScreenVM --> Caller: Return
 else #efbbbb (CATCH)
 LandingScreenVM -> LandingScreenVM: Write log exceptions
-LandingScreenVM --> Caller : Returns
+LandingScreenVM --> Caller : Return
 deactivate Caller
 deactivate LandingScreenVM 
 end
@@ -90,10 +90,10 @@ activate Caller
 alt #POSITIVERESPONSE (TRY) 
 activate LandingScreenVM
 LandingScreenVM -> LandingScreenVM: Push to the **postCreationScreen**
-LandingScreenVM --> Caller: Returns
+LandingScreenVM --> Caller: Return
 else #efbbbb (CATCH)
 LandingScreenVM -> LandingScreenVM: Write log exceptions
-LandingScreenVM --> Caller : Returns
+LandingScreenVM --> Caller : Return
 deactivate Caller
 deactivate LandingScreenVM  
 end

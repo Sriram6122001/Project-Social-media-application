@@ -20,12 +20,15 @@ Caller -> PostBOExtension: Invoke **sortPostByDate()**
 Activate Caller
 Activate PostBOExtension
 PostBOExtension -> PostBOExtension: Sort the **@tempPostList**
-PostBOExtension --> Caller: Return **List<PostBO>**
+PostBOExtension --> Caller: Returns **List<PostBO>**
 deactivate PostBOExtension
 deactivate Caller
 
 ==PSEUDOCODE - sortPostByDate()==
 hnote across 
-SORT the **@tempPostList** using **sort()** and use **compareTo()** to compare using **Date**.
+SORT the **@tempPostList** using **sort()** and use **compareTo()** to compare using **Date**
+
+RETURNS **List<PostBO>**
+
 endnote
 @enduml

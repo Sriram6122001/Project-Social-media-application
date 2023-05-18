@@ -31,8 +31,8 @@ package Pages{
 package Services{
     package PostService{
         Interface IPostService{
-            + getAllPosts(): Future<ServiceResult<List<PostBO>>>
-            + createNewPost(Post:PostBO): Future<ServiceResult<bool>>
+            + getAllPosts<T>(): Future<ServiceResult<List<PostBO>>>
+            + createNewPost<T>(Post:PostBO): Future<ServiceResult<bool>>
         }
     }
 }

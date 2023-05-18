@@ -21,17 +21,17 @@ alt (TRY)
 activate CreationResponseScreen
 CreationResponseScreen -> CreationResponseScreenVM: Invoke the **Constructor()** and pass **statusCode** as **parameter**
 activate CreationResponseScreenVM
-CreationResponseScreenVM --> CreationResponseScreen: Returns
+CreationResponseScreenVM --> CreationResponseScreen: Return
 deactivate CreationResponseScreenVM
-CreationResponseScreen --> User: Returns
+CreationResponseScreen --> User: Return
 CreationResponseScreen -> CreationResponseScreen: Add a listener for **navigationStream** and listen to the **event**
 alt #POSITIVERESPONSE **(IF event is NavigatorPopAndRemoveUntil)**
 CreationResponseScreen -> CreationResponseScreen:Pop the context to the **CreationResponseScreen**
-CreationResponseScreen --> User: Returns
+CreationResponseScreen --> User: Return
 end 
 else #NEGATIVEERESPONSE **(CATCH)**
 CreationResponseScreen -> CreationResponseScreen: Write log exceptions
-CreationResponseScreen--> User: Returns
+CreationResponseScreen--> User: Return
 deactivate CreationResponseScreen
 deactivate User 
 end
@@ -61,7 +61,7 @@ User -> CreationResponseScreen: Invokes **dispose()**
 activate User
 activate CreationResponseScreen
 CreationResponseScreen -> CreationResponseScreen: Dispose the **navigationStream** using dispose()
-CreationResponseScreen --> User: Returns
+CreationResponseScreen --> User: Return
 deactivate User
 deactivate CreationResponseScreen
 
@@ -80,7 +80,7 @@ User -> CreationResponseScreen: Invokes **"Back To" button.clicked**
 activate User
 activate CreationResponseScreen
 CreationResponseScreen -> CreationResponseScreenVM: Invokes **navigateToCreationResponseScreen()**
-CreationResponseScreenVM -> CreationResponseScreen: Returns
+CreationResponseScreenVM -> CreationResponseScreen: Return
 CreationResponseScreen --> User: Displays **CreationResponseScreen**
 deactivate User
 deactivate CreationResponseScreen

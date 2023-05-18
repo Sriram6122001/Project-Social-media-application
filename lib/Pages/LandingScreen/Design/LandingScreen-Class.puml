@@ -35,7 +35,7 @@ package BOs{
 package Services{
     package PostService{
         Interface IPostService{
-            + getAllPost(): Future<ServiceResult<<List<PostBO>>>
+            + getAllPost<T>(): Future<ServiceResult<<List<PostBO>>>
         }
     }
 }
