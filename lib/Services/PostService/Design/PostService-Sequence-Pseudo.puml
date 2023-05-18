@@ -16,20 +16,24 @@ skinparam sequence{
 title 'PostService - getAllPosts()'
 autonumber 1
 hide footbox
-Caller -> PostService: Invoke **getAllPosts**
+Caller -> PostService: Invokes **getAllPosts**
 alt #POSITIVERESPONSE (TRY)
 activate Caller
 activate PostService
 PostService -> Server: Make the http get call from the url and pass the **authkey** in header
 activate Server 
-Server --> PostService: Return **response**
+Server --> PostService: Return **List<PostBO>**
 deactivate Server
 PostService -> PostService: Store the response in **response** variable.
-PostService -> PostService: Invoke **getApiServiceResult()** by using **response**
-PostService --> Caller: Return ServiceResult and assign the statuscode **OK** and message as **Success** and content as **response**
+PostService -> PostService: Invoke **getApiServiceResult()** by using **response** and store the value in **result**
+PostService --> Caller: Return **ServiceResult**
+else #NEGATIVEERESPONSE on FormatException
+PostService --> Caller: Return ServiceResult and assign the statuscode as **Forbidden** and message as **"The type of data got is incorrect!"**
+else #NEGATIVEERESPONSE on SocketException
+PostService --> Caller: Return ServiceResult and assign the statuscode as **NetworkFailure** and message as **"There is not internet connection!"** and content as **empty**
 else #NEGATIVEERESPONSE (CATCH)
 PostService -> PostService: Write log exceptions
-PostService --> Caller: Return the ServiceResult with status code as ServiceException and the message with exception message.
+PostService --> Caller:  Return ServiceResult and assign the statuscode **SystemException** and message as **exception**.
 deactivate PostService
 deactivate Caller
 end
@@ -38,15 +42,26 @@ end
 hnote across
 **TRY**
 
-    EXECUTE **_dio.get()** with the **url** as **"http://dummyjson.com/fetchAllPosts"** and key as **authkey** with value as **123** in header
+    EXECUTE **_dio.get()** with the **url** as "http://dummyjson.com/getAllPosts" and header's key as **authkey** with value as **123**
 
     STORE the response in the variable **response**
 
-    STORE the result of the method **getApiServiceResult()** by passing **result** as parameter and **type** as type of **List<UserBO>**
+    STORE the result of EXECUTING the method **getApiServiceResult()** by passing **result** as parameter and **type** as type of **List<UserBO>**
 
+    RETURN **ServiceResult**
+
+**ON FORMATEXCEPTION**
+
+    RETURN ServiceResult and assign the **statuscode as Forbidden** and **message as "The type of data got is incorrect!"**
+
+**ON SOCKETEXCEPTION**
+
+    RETURN ServiceResult and assign the **statuscode as NetworkFailure** and **message as "There is not internet connection!"** and **content as empty**
+    
 **CATCH**
 
-    RETURN the ServiceResult with status code as *ServiceException and the message with **exception message**
+    RETURN ServiceResult and assign the statuscode **SystemException** and message as **exception**
+
 endnote
 
 newpage 'PostService - createNewPost(postBO:PostBO)'
@@ -58,11 +73,15 @@ activate Caller
 activate PostService
 PostService -> Server: Make the http post call and pass PostBO from the url and pass the **authkey** in header
 activate Server 
-Server --> PostService: Returns response
+Server --> PostService: Returns **response**
 deactivate Server
 PostService -> PostService: Store the response in **response** variable.
 PostService -> PostService: Invoke **getApiServiceResult()** by using **response** 
-PostService --> Caller: Return ServiceResult and assign the statuscode **OK** and message as **Success** and content as **response.data**
+PostService --> Caller: Return **ServiceResult**
+else #NEGATIVEERESPONSE on FormatException
+PostService --> Caller: Return ServiceResult and assign the statuscode as **Forbidden** and message as "The type of data got is incorrect!"
+else #NEGATIVEERESPONSE on SocketException
+PostService --> Caller: Return ServiceResult and assign the statuscode as **NetworkFailure** and message as "There is not internet connection!" and content as empty
 else #efbbbb Catch 
 PostService -> PostService: Write log exceptions
 PostService --> Caller:  Return ServiceResult and assign the statuscode **SystemException** and message as **exception**.
@@ -74,15 +93,25 @@ end
 hnote across
 **TRY**
 
-    EXECUTE **_dio.post()** with the **url** as **"http://dummyjson.com/createNewPost"** and key as **authkey** with value as **123** in header
+    EXECUTE **_dio.get()** with the **url** as "http://dummyjson.com/createNewPost" and header's key as **authkey** with value as **123**
 
     STORE the response in the variable **response**
 
-    STORE the result of the method **getApiServiceResult()** by passing **result** as parameter and **type** as type of **bool**
+    STORE the result of EXECUTING the method **getApiServiceResult()** by passing **result** as parameter and **type** as type of **bool**
 
+    RETURN **ServiceResult**
+
+**ON FORMATEXCEPTION**
+
+    RETURN ServiceResult and assign the  **statuscode as Forbidden** and **message as "The type of data got is incorrect!"**
+
+**ON SOCKETEXCEPTION**
+
+    RETURN ServiceResult and assign the **statuscode as NetworkFailure** and **message as "There is not internet connection!"** and **content as empty**
+    
 **CATCH**
 
-    RETURN the ServiceResult with status code as *ServiceException and the message with **exception message**
+    RETURN ServiceResult and assign the statuscode **SystemException** and message as **exception**
 
 endnote
 

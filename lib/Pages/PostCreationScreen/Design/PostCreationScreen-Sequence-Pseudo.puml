@@ -178,11 +178,13 @@ autonumber 1
 hide footbox
 User -> PostCreationScreen: User enters text in the textField
 activate User
+activate PostCreationScreen
 PostCreationScreen -> PostCreationScreenVM: Invoke **onDescriptionChange(description:String)**
 activate PostCreationScreenVM
 PostCreationScreenVM --> PostCreationScreen: Returns
 deactivate PostCreationScreenVM
 PostCreationScreen --> User: Display **Text**
+deactivate PostCreationScreen
 deactivate User
 deactivate PostCreationScreen
 
